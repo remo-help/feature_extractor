@@ -1,0 +1,8 @@
+file: "test.csv"
+token_regex: "poodle"
+pos_regex: ""
+outputfile: "features.json"
+encoding: "utf-8"
+dir:
+window: 2
+uncased:
