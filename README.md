@@ -58,6 +58,7 @@ Further, the files have to be labelled alphabetically inside the directory.
 
 The extractor can take a number of arguments, but it must minimally have either `file` or `--dir`specified. 
 You can specify these parameters in `config.yaml`, or you can specify them as command line input.
+Please be aware that any parameter specified in the command line will override the parameter's value in the config file.
 These are the possible parameters:
 
 * `--file FILENAME` If you only want to operate on a single file, specify the filename with this argument.
