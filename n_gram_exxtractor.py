@@ -159,8 +159,9 @@ def extractor(input: pd.DataFrame, token_pattern: str, lower: bool=False, window
                 temp_dic = {"Id": token_id, "token": tokens[index], f"{window}_gram": all_features}
                 feature_list.append(temp_dic)
     # Returning the list of dictionaries
-    n_gram_list = [i[f"{window}_gram"] for i in feature_list]
+    n_gram_list = [" ".join(i[f"{window}_gram"]) for i in feature_list]
     if count:
+        print(n_gram_list)
         n_count = Counter(n_gram_list)
         return feature_list, n_count
     else:
@@ -186,9 +187,11 @@ def export(features: [dict], filename: str, encod= str("utf-8"), count: bool=Fal
     """
     # opening our file, beware that "w+" will overwrite
     # Now we dump a json for every entry in our dictionary list.
+    print(features)
     if count:
-        features = features[0]
-        ngrams = features[1]
+        #features = features[0]
+        #ngrams = features[1]
+        features, ngrams = features
         writefile = open(filename+'n_gram_count', "w+", encoding=encod)
         # Now we dump a json for every entry in our dictionary list.
         for i in ngrams:
@@ -258,9 +261,9 @@ def main() -> None:
     if args.file and not args.dir:
         file = read_in_csv(args.file)
         if args.uncased:
-            tokens = extractor(file, token=args.token_regex, lower=True, window=args.window, count=args.count)
+            tokens = extractor(file, token_pattern=args.token_regex, lower=True, window=args.window, count=args.count)
         else:
-            tokens = extractor(file, lower=False, window=args.window, token=args.token_regex, count=args.count)
+            tokens = extractor(file, lower=False, window=args.window, token_pattern=args.token_regex, count=args.count)
         export(features=tokens,filename=args.outputfile,encod=args.encoding, count=args.count)
         print("success")
     elif args.dir and not args.file:
@@ -272,10 +275,10 @@ def main() -> None:
                 filename = entry.path
                 file = read_in_csv(filename)
                 if args.uncased:
-                    tokens = extractor(file, token=args.token_regex, pos_regex=args.pos_regex,
+                    tokens = extractor(file, token_pattern=args.token_regex,
                                        lower=True, window=args.window)
                 else:
-                    tokens = extractor(file, token=args.token_regex, pos_regex=args.pos_regex,
+                    tokens = extractor(file, token_pattern=args.token_regex,
                                        lower=False, window=args.window)
                 list_of_lists.append(tokens)
         print("success")
