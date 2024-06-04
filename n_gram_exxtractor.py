@@ -142,7 +142,7 @@ def extractor(input: pd.DataFrame, token_pattern: str, lower: bool=False, window
                         token_features.append(tokens[idx])
                 else:
                     t = index + window
-                    j = len(tokens)+1
+                    j = len(tokens)
                     overshoot = t - j
                     for i in range(window-overshoot):
                         idx = index + i
@@ -196,9 +196,9 @@ def export(features: [dict], filename: str, encod= str("utf-8"), count: bool=Fal
         # Now we dump a json for every entry in our dictionary list.
         for i in ngrams:
             writefile.write(f"{i}:{ngrams[i]}")
-            if (len(features) - 1) > features.index(i):
-                writefile.write("\n")
+            writefile.write("\n")
         writefile.close()
+        writefile = open(filename, "w+", encoding=encod)
         for i in features:
             json.dump(i, writefile)
             if (len(features) - 1) > features.index(i):
