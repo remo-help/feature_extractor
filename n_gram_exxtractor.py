@@ -187,7 +187,7 @@ def export(features: [dict], filename: str, encod= str("utf-8"), count: bool=Fal
     """
     # opening our file, beware that "w+" will overwrite
     # Now we dump a json for every entry in our dictionary list.
-    print(features)
+    #print(features)
     if count:
         #features = features[0]
         #ngrams = features[1]
